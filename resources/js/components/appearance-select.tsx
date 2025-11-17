@@ -24,17 +24,17 @@ export function AppearanceDropdown() {
   }[] = [
     {
       value: 'light',
-      label: 'Light',
+      label: 'Claro',
       icon: <Sun className="h-4 w-4 text-yellow-400" />,
     },
     {
       value: 'dark',
-      label: 'Dark',
+      label: 'Oscuro',
       icon: <Moon className="h-4 w-4 text-purple-400" />,
     },
     {
       value: 'system',
-      label: 'System',
+      label: 'Sistema',
       icon: <Monitor className="h-4 w-4 text-blue-400" />,
     },
   ];
@@ -60,7 +60,7 @@ export function AppearanceDropdown() {
           </DropdownMenuTrigger>
         </TooltipTrigger>
         <TooltipContent side="bottom" className="text-xs font-medium">
-          Change Theme
+          Cambiar tema
         </TooltipContent>
       </Tooltip>
 

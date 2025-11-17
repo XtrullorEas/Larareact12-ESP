@@ -57,7 +57,7 @@ class MenuController extends Controller
 
         Menu::create($data);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan.');
+        return redirect()->route('menus.index')->with('success', 'Menú añadido correctamente.');
     }
 
     public function edit(Menu $menu)
@@ -89,7 +89,7 @@ class MenuController extends Controller
 
         $menu->update($data);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui.');
+        return redirect()->route('menus.index')->with('success', 'Menú actualizado correctamente.');
     }
 
     public function destroy(Menu $menu)
@@ -97,7 +97,7 @@ class MenuController extends Controller
         $menu->children()->delete();
         $menu->delete();
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus.');
+        return redirect()->route('menus.index')->with('success', 'Menú eliminado correctamente.');
     }
 
     public function reorder(Request $request)
@@ -119,6 +119,6 @@ class MenuController extends Controller
 
         $updateOrder($menus);
 
-        return redirect()->back()->with('success', 'Urutan menu berhasil disimpan.');
+        return redirect()->back()->with('success', 'Orden del menú guardado correctamente.');
     }
 }

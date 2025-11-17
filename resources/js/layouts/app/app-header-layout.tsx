@@ -24,6 +24,7 @@ export default function AppHeaderLayout({
     const setting = props?.setting as {
         nama_app: string;
         logo?: string;
+        favicon?: string;
         warna?: string;
         seo?: {
             title?: string;
@@ -57,6 +58,9 @@ export default function AppHeaderLayout({
                 )}
                 {setting?.seo?.keywords && (
                     <meta name="keywords" content={setting.seo.keywords} />
+                )}
+                {setting?.favicon && (
+                    <link rel="icon" type="image/x-icon" href={`/storage/${setting.favicon}`} />
                 )}
                 <style>
                     {`

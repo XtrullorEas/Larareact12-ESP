@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,11 +16,13 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Plus, Edit, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import RoleModal from './RoleModal';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Role Management',
+    title: 'Gestión de roles',
     href: '/roles',
   },
 ];
@@ -42,76 +44,91 @@ interface Props {
   groupedPermissions: Record<string, Permission[]>;
 }
 
-export default function RoleIndex({ roles }: Props) {
+export default function RoleIndex({ roles, groupedPermissions }: Props) {
   const { delete: destroy, processing } = useForm();
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedRole, setSelectedRole] = React.useState<Role | null>(null);
 
   const handleDelete = (id: number) => {
     destroy(`/roles/${id}`);
   };
 
+  const openCreateModal = () => {
+    setSelectedRole(null);
+    setModalOpen(true);
+  };
+
+  const openEditModal = (role: Role) => {
+    setSelectedRole(role);
+    setModalOpen(true);
+  };
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Role Management" />
+      <Head title="Gestión de roles" />
       <div className="flex-1 space-y-6 p-4 md:p-6">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Role Management</h1>
+            <h1 className="text-2xl font-bold tracking-tight">Gestión de roles</h1>
             <p className="text-muted-foreground">
-              Manage roles and permissions for the system
+              Gestiona los roles y permisos para el sistema
             </p>
           </div>
-          <Link href="/roles/create">
-            <Button className="w-full md:w-auto" size="sm">
-              + Add Role
-            </Button>
-          </Link>
+          <Button className="w-full md:w-auto" size="sm" onClick={openCreateModal}>
+            <Plus className="h-4 w-4" />
+            Añadir Rol
+          </Button>
         </div>
 
         <div className="space-y-4">
           {roles.length === 0 && (
             <Card>
               <CardContent className="py-6 text-center text-muted-foreground">
-                No role data available.
+                No hay datos de roles disponibles.
               </CardContent>
             </Card>
           )}
 
           {roles.map((role) => (
             <Card key={role.id} className="border shadow-sm">
-              <CardHeader className="bg-muted/40 border-b md:flex-row md:items-center md:justify-between md:space-y-0 space-y-2">
+              <CardHeader className="bg-muted/40 border-b flex flex-row md:items-center justify-between md:justify-between md:space-y-0 space-y-2">
                 <div className="space-y-1">
                   <CardTitle className="text-base font-semibold flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-primary" />
                     {role.name}
                   </CardTitle>
                   <div className="text-sm text-muted-foreground">
-                    {role.permissions.length} permission
+                    {role.permissions.length} permiso
                     {role.permissions.length > 1 ? 's' : ''}
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Link href={`/roles/${role.id}/edit`}>
-                    <Button size="sm" variant="outline">Edit</Button>
-                  </Link>
+                <div className="flex flex-wrap gap-2 justify-end md:justify-start">
+                  <Button size="sm" variant="outline" onClick={() => openEditModal(role)}>
+                    <Edit className="h-4 w-4" />
+                    <span className='hidden sm:inline'>Editar</span>
+                  </Button>
 
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button size="sm" variant="destructive">Delete</Button>
+                      <Button size="sm" variant="destructive">
+                        <Trash2 className="h-4 w-4" />
+                        <span className='hidden sm:inline'>Eliminar</span>
+                      </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
                         <AlertDialogDescription>
-                          Role <strong>{role.name}</strong> will be permanently deleted.
+                          El rol <strong>{role.name}</strong> será eliminado permanentemente.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => handleDelete(role.id)}
                           disabled={processing}
                         >
-                          Yes, Delete
+                          Sí, Eliminar
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -122,7 +139,7 @@ export default function RoleIndex({ roles }: Props) {
               {role.permissions.length > 0 && (
                 <CardContent className="pt-4">
                   <p className="mb-2 text-sm font-medium text-muted-foreground">
-                    Permissions:
+                    Permisos asignados:
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {role.permissions.map((permission) => (
@@ -141,6 +158,14 @@ export default function RoleIndex({ roles }: Props) {
           ))}
         </div>
       </div>
+
+      {/* Role Modal */}
+      <RoleModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        role={selectedRole}
+        groupedPermissions={groupedPermissions}
+      />
     </AppLayout>
   );
 }

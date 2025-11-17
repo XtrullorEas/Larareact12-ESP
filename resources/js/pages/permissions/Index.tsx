@@ -22,6 +22,7 @@ import {
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
+import PermissionModal from './PermissionModal';
 
 interface Props {
   permissions: {
@@ -39,18 +40,20 @@ interface Props {
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Permission Management',
+    title: 'Gestión de permisos',
     href: '/permissions',
   },
 ];
 
 export default function PermissionIndex({ permissions, groups, filters }: Props) {
   const [search, setSearch] = useState(filters.search || '');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPermission, setSelectedPermission] = useState<Permission | null>(null);
 
   const handleDelete = (id: number) => {
     router.delete(`/permissions/${id}`, {
-      onSuccess: () => toast.success('Permission deleted successfully'),
-      onError: () => toast.error('Failed to delete permission'),
+      onSuccess: () => toast.success('Permiso eliminado con éxito'),
+      onError: () => toast.error('Error al eliminar el permiso'),
     });
   };
 
@@ -65,22 +68,30 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
     }
   };
 
+  const openCreateModal = () => {
+    setSelectedPermission(null);
+    setModalOpen(true);
+  };
+
+  const openEditModal = (permission: Permission) => {
+    setSelectedPermission(permission);
+    setModalOpen(true);
+  };
+
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Permission Management" />
+      <Head title="Gestión de permisos" />
       <div className="flex-1 p-4 md:p-6">
         <Card>
           <CardHeader className="pb-3 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-2xl font-bold">Permissions</CardTitle>
-              <p className="text-muted-foreground text-sm">Manage system access permissions</p>
+              <CardTitle className="text-2xl font-bold">Permisos</CardTitle>
+              <p className="text-muted-foreground text-sm">Gestionar permisos de acceso al sistema</p>
             </div>
-            <Link href="/permissions/create">
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Permission
-              </Button>
-            </Link>
+            <Button onClick={openCreateModal}>
+              <Plus className="h-4 w-4 mr-2" />
+              Añadir Permiso
+            </Button>
           </CardHeader>
 
           <Separator />
@@ -90,7 +101,7 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
             <div className="flex flex-col md:flex-row md:items-center gap-4">
               <Input
                 type="text"
-                placeholder="Search permissions... (press Enter)"
+                placeholder="Buscar permisos... (presiona Enter)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={handleSearchKey}
@@ -100,10 +111,10 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
                 onValueChange={handleGroupChange}
               >
                 <SelectTrigger className="md:w-64">
-                  <SelectValue placeholder="All Groups" />
+                  <SelectValue placeholder="Todos los grupos" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__ALL__">All Groups</SelectItem>
+                  <SelectItem value="__ALL__">Todos los grupos</SelectItem>
                   {groups.map((group) => (
                     <SelectItem key={group} value={group}>
                       {group}
@@ -116,7 +127,7 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
             {/* List */}
             <div className="space-y-3">
               {permissions.data.length === 0 ? (
-                <p className="text-muted-foreground text-center">No data available.</p>
+                <p className="text-muted-foreground text-center">No hay datos disponibles.</p>
               ) : (
                 permissions.data.map((permission) => (
                   <div
@@ -125,11 +136,9 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
                   >
                     <div className="font-medium text-sm text-foreground">{permission.name}</div>
                     <div className="flex items-center gap-2">
-                      <Link href={`/permissions/${permission.id}/edit`}>
-                        <Button variant="ghost" size="icon">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                      </Link>
+                      <Button variant="ghost" size="icon" onClick={() => openEditModal(permission)}>
+                        <Edit className="h-4 w-4" />
+                      </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <Button variant="ghost" size="icon" className="text-destructive hover:text-red-600">
@@ -138,18 +147,18 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete this permission?</AlertDialogTitle>
+                            <AlertDialogTitle>¿Eliminar este permiso?</AlertDialogTitle>
                             <AlertDialogDescription>
-                              Permission <strong>{permission.name}</strong> will be permanently deleted.
+                              El permiso <strong>{permission.name}</strong> será eliminado permanentemente.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
                             <AlertDialogAction
                               className="bg-destructive hover:bg-destructive/90"
                               onClick={() => handleDelete(permission.id)}
                             >
-                              Delete
+                              Eliminar
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -179,6 +188,14 @@ export default function PermissionIndex({ permissions, groups, filters }: Props)
           </CardContent>
         </Card>
       </div>
+
+      {/* Permission Modal */}
+      <PermissionModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        permission={selectedPermission}
+        groups={groups}
+      />
     </AppLayout>
   );
 }

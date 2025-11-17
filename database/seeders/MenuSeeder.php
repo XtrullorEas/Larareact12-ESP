@@ -20,7 +20,7 @@ class MenuSeeder extends Seeder
 
         // GROUP: Access
         $access = Menu::create([
-            'title' => 'Access',
+            'title' => 'Acceso',
             'icon' => 'Contact',
             'route' => '#',
             'order' => 2,
@@ -28,7 +28,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'Permissions',
+            'title' => 'Permisos',
             'icon' => 'AlertOctagon',
             'route' => '/permissions',
             'order' => 2,
@@ -37,7 +37,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'Users',
+            'title' => 'Usuarios',
             'icon' => 'Users',
             'route' => '/users',
             'order' => 3,
@@ -56,7 +56,7 @@ class MenuSeeder extends Seeder
 
         // GROUP: Settings
         $settings = Menu::create([
-            'title' => 'Settings',
+            'title' => 'Configuración',
             'icon' => 'Settings',
             'route' => '#',
             'order' => 3,
@@ -64,7 +64,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'Menu Manager',
+            'title' => 'Gestor de Menú',
             'icon' => 'Menu',
             'route' => '/menus',
             'order' => 1,
@@ -73,7 +73,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'App Settings',
+            'title' => 'Configuración de la App',
             'icon' => 'AtSign',
             'route' => '/settingsapp',
             'order' => 2,
@@ -92,7 +92,7 @@ class MenuSeeder extends Seeder
 
         // GROUP: Utilities
         $utilities = Menu::create([
-            'title' => 'Utilities',
+            'title' => 'Utilidades',
             'icon' => 'CreditCard',
             'route' => '#',
             'order' => 4,
@@ -100,7 +100,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'Audit Logs',
+            'title' => 'Registros de Auditoría',
             'icon' => 'Activity',
             'route' => '/audit-logs',
             'order' => 2,
@@ -109,7 +109,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'File Manager',
+            'title' => 'Gestor de Archivos',
             'icon' => 'Folder',
             'route' => '/files',
             'order' => 3,

@@ -19,19 +19,19 @@ class RolePermissionSeeder extends Seeder
             'Dashboard' => [
                 'dashboard-view',
             ],
-            'Access' => [
+            'Acceso' => [
                 'access-view',
                 'permission-view',
                 'users-view',
                 'roles-view',
             ],
-            'Settings' => [
+            'Configuracion' => [
                 'settings-view',
                 'menu-view',
                 'app-settings-view',
                 'backup-view',
             ],
-            'Utilities' => [
+            'Utilidades' => [
                 'utilities-view',
                 'log-view',
                 'filemanager-view',

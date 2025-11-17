@@ -25,6 +25,17 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    setting: {
+        nama_app: string;
+        logo?: string;
+        favicon?: string;
+        warna?: string;
+        seo?: {
+            title?: string;
+            description?: string;
+            keywords?: string;
+        };
+    };
     [key: string]: unknown;
 }
 
@@ -36,6 +47,10 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    roles: {
+        id: number;
+        name: string;
+    }[];
     [key: string]: unknown; // This allows for additional properties...
 }
 
@@ -46,5 +61,10 @@ export interface Permission {
     guard_name?: string;
     created_at?: string;
     updated_at?: string;
-  }
-  
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    permissions: Permission[];
+}

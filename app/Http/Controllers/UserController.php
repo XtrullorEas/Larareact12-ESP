@@ -14,9 +14,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('roles')->latest()->paginate(10);
+        $roles = Role::all();
 
         return Inertia::render('users/Index', [
             'users' => $users,
+            'roles' => $roles,
         ]);
     }
 
@@ -46,7 +48,7 @@ class UserController extends Controller
 
         $user->assignRole($validated['role']);
 
-        return redirect()->route('users.index')->with('success', 'User berhasil dibuat.');
+        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
     }
 
     public function edit(User $user)
@@ -79,14 +81,14 @@ class UserController extends Controller
 
         $user->syncRoles([$validated['role']]);
 
-        return redirect()->route('users.index')->with('success', 'User berhasil diperbarui.');
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente.');
     }
 
     public function resetPassword(User $user)
@@ -95,6 +97,6 @@ class UserController extends Controller
             'password' => Hash::make('ResetPasswordNya'),
         ]);
 
-        return redirect()->back()->with('success', 'Password berhasil direset ke default.');
+        return redirect()->back()->with('success', 'Contraseña restablecida a la predeterminada.');
     }
 }

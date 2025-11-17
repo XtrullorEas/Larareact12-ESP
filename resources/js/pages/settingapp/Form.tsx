@@ -30,7 +30,7 @@ interface Props {
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
-  { title: 'Application Settings', href: '/settingsapp' },
+  { title: 'Configuración de la Aplicación', href: '/settingsapp' },
 ];
 
 export default function SettingForm({ setting }: Props) {
@@ -64,15 +64,15 @@ export default function SettingForm({ setting }: Props) {
       <div className="flex-1 p-4 md:p-6">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold tracking-tight">Application Settings</CardTitle>
-            <p className="text-muted-foreground text-sm mt-1">Configure application identity, theme color, logo, and SEO metadata.</p>
+            <CardTitle className="text-2xl font-bold tracking-tight">Configuración de la Aplicación</CardTitle>
+            <p className="text-muted-foreground text-sm mt-1">Configura la identidad de la aplicación, el color del tema, el logotipo y los metadatos SEO.</p>
           </CardHeader>
           <Separator />
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Nama App */}
               <div className="space-y-1">
-                <Label htmlFor="nama_app">Application Name</Label>
+                <Label htmlFor="nama_app">Nombre de la Aplicación</Label>
                 <Input
                   id="nama_app"
                   value={data.nama_app}
@@ -84,7 +84,7 @@ export default function SettingForm({ setting }: Props) {
 
               {/* Deskripsi */}
               <div className="space-y-1">
-                <Label htmlFor="deskripsi">Description</Label>
+                <Label htmlFor="deskripsi">Descripción</Label>
                 <Textarea
                   id="deskripsi"
                   value={data.deskripsi}
@@ -94,7 +94,7 @@ export default function SettingForm({ setting }: Props) {
 
               {/* Warna Tema */}
               <div className="space-y-1">
-                <Label htmlFor="warna">Theme Color</Label>
+                <Label htmlFor="warna">Color del tema</Label>
                 <div className="flex items-center gap-4">
                   <Input
                     id="warna"
@@ -109,7 +109,7 @@ export default function SettingForm({ setting }: Props) {
                     size="sm"
                     onClick={() => setData('warna', DEFAULT_WARNA)}
                   >
-                    Reset Default
+                    Restablecer predeterminado
                   </Button>
                 </div>
               </div>
@@ -152,10 +152,10 @@ export default function SettingForm({ setting }: Props) {
 
               {/* SEO Section */}
               <Separator />
-              <h3 className="text-lg font-semibold">SEO Settings</h3>
+              <h3 className="text-lg font-semibold">Configuración SEO</h3>
 
               <div className="space-y-1">
-                <Label htmlFor="seo_title">SEO Title</Label>
+                <Label htmlFor="seo_title">Título SEO</Label>
                 <Input
                   id="seo_title"
                   value={data.seo.title}
@@ -164,7 +164,7 @@ export default function SettingForm({ setting }: Props) {
               </div>
 
               <div className="space-y-1">
-                <Label htmlFor="seo_description">SEO Description</Label>
+                <Label htmlFor="seo_description">Descripción SEO</Label>
                 <Textarea
                   id="seo_description"
                   value={data.seo.description}
@@ -173,7 +173,7 @@ export default function SettingForm({ setting }: Props) {
               </div>
 
               <div className="space-y-1">
-                <Label htmlFor="seo_keywords">SEO Keywords (separate with commas)</Label>
+                <Label htmlFor="seo_keywords">Palabras clave SEO (separadas por comas)</Label>
                 <Input
                   id="seo_keywords"
                   value={data.seo.keywords}
@@ -184,7 +184,7 @@ export default function SettingForm({ setting }: Props) {
               {/* Submit Button */}
               <div className="pt-4 flex justify-end">
                 <Button type="submit" disabled={processing} className="px-6">
-                  {processing ? 'Saving...' : 'Save Settings'}
+                  {processing ? 'Guardando...' : 'Guardar Configuración'}
                 </Button>
               </div>
             </form>

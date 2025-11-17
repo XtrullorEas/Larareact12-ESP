@@ -1,7 +1,9 @@
 import { usePage } from '@inertiajs/react';
 import AppLogoIcon from './app-logo-icon';
+import { useSidebar } from './ui/sidebar';
 
 export default function AppLogo() {
+  const { state } = useSidebar();
   const setting = usePage().props.setting as {
     nama_app?: string;
     logo?: string;
@@ -19,7 +21,7 @@ export default function AppLogo() {
         <img
           src={`/storage/${logo}`}
           alt="Logo"
-          className="h-8 w-8 rounded-md object-contain"
+          className={`${state === 'collapsed' ? 'size-8' : 'h-13 w-13'} rounded-md object-contain transition-all duration-300`}
         />
       ) : (
         <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
