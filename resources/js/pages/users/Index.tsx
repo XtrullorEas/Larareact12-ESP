@@ -168,6 +168,7 @@ export default function UserIndex({ users, roles }: Props) {
                         <AlertDialogAction
                           onClick={() => handleDelete(user.id)}
                           disabled={processing}
+                          className="bg-destructive hover:bg-destructive/90"
                         >
                           Sí, Eliminar
                         </AlertDialogAction>

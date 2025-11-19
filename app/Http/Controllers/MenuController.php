@@ -24,8 +24,13 @@ class MenuController extends Controller
             ->orderBy('order')
             ->get();
 
+        $parentMenus = Menu::orderBy('title')->get();
+        $permissions = Permission::orderBy('name')->pluck('name');
+
         return Inertia::render('menus/Index', [
             'menuItems' => $menus,
+            'parentMenus' => $parentMenus,
+            'permissions' => $permissions,
         ]);
     }
 
@@ -57,7 +62,7 @@ class MenuController extends Controller
 
         Menu::create($data);
 
-        return redirect()->route('menus.index')->with('success', 'Menú añadido correctamente.');
+        return redirect()->route('menus.index');
     }
 
     public function edit(Menu $menu)
@@ -89,7 +94,7 @@ class MenuController extends Controller
 
         $menu->update($data);
 
-        return redirect()->route('menus.index')->with('success', 'Menú actualizado correctamente.');
+        return redirect()->route('menus.index');
     }
 
     public function destroy(Menu $menu)
@@ -97,7 +102,7 @@ class MenuController extends Controller
         $menu->children()->delete();
         $menu->delete();
 
-        return redirect()->route('menus.index')->with('success', 'Menú eliminado correctamente.');
+        return redirect()->route('menus.index');
     }
 
     public function reorder(Request $request)
@@ -119,6 +124,6 @@ class MenuController extends Controller
 
         $updateOrder($menus);
 
-        return redirect()->back()->with('success', 'Orden del menú guardado correctamente.');
+        return redirect()->back();
     }
 }

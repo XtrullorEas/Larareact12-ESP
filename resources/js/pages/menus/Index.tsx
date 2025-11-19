@@ -1,8 +1,9 @@
 import React, { JSX, useState } from 'react';
-import { Head, router, Link } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 import { type BreadcrumbItem } from '@/types';
+import MenuModal from '@/pages/menus/MenuModal';
 import {
   DndContext,
   closestCenter,
@@ -37,26 +38,38 @@ import { Separator } from '@/components/ui/separator';
 interface MenuItem {
   id: number;
   title: string;
-  parent_id?: number;
+  route: string;
+  icon: string;
+  parent_id: number | null;
+  permission_name: string | null;
   order: number;
   children?: MenuItem[];
 }
 
 interface Props {
   menuItems: MenuItem[];
+  parentMenus: { id: number; title: string }[];
+  permissions: string[];
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Menu Management',
+    title: 'Gestión de menús',
     href: '/menus',
   },
 ];
 
-export default function MenuIndex({ menuItems }: Props) {
+export default function MenuIndex({ menuItems, parentMenus, permissions }: Props) {
   const [menus, setMenus] = useState<MenuItem[]>(menuItems);
   const [isSaving, setIsSaving] = useState(false);
   const [expandedIds, setExpandedIds] = useState<number[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
+
+  // Sincronizar el estado local cuando menuItems cambie desde el servidor
+  React.useEffect(() => {
+    setMenus(menuItems);
+  }, [menuItems]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -109,26 +122,28 @@ export default function MenuIndex({ menuItems }: Props) {
     };
 
     router.post('/menus/reorder', { menus: buildOrderPayload(menus) }, {
-      onSuccess: () => toast.success('Menu order saved successfully'),
-      onError: () => toast.error('Failed to save menu order'),
+      onSuccess: () => toast.success('Orden del menú se ha guardado correctamente.'),
+      onError: () => toast.error('No se pudo guardar el orden del menú.'),
       onFinish: () => setIsSaving(false),
     });
+  };
+
+  const openCreateModal = () => {
+    setSelectedMenu(null);
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (menu: MenuItem) => {
+    setSelectedMenu(menu);
+    setIsModalOpen(true);
   };
 
   const handleDelete = (id: number) => {
     router.delete(`/menus/${id}`, {
       onSuccess: () => {
-        setMenus((prev) =>
-          prev
-            .map((m) => ({
-              ...m,
-              children: m.children?.filter((c) => c.id !== id) || [],
-            }))
-            .filter((m) => m.id !== id)
-        );
-        toast.success('Menu deleted successfully.');
+        toast.success('Menú eliminado correctamente.');
       },
-      onError: () => toast.error('Failed to delete menu.'),
+      onError: () => toast.error('No se pudo eliminar el menú.'),
     });
   };
 
@@ -165,11 +180,14 @@ export default function MenuIndex({ menuItems }: Props) {
             </div>
 
             <div className="flex items-center gap-1">
-              <Link href={`/menus/${menu.id}/edit`}>
-                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
-                  <Edit className="h-4 w-4" />
-                </Button>
-              </Link>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-muted-foreground hover:text-primary"
+                onClick={() => openEditModal(menu)}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
@@ -178,18 +196,18 @@ export default function MenuIndex({ menuItems }: Props) {
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete this menu?</AlertDialogTitle>
+                    <AlertDialogTitle>¿Eliminar este menú?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will permanently delete the menu "{menu.title}".
+                      Esto eliminará permanentemente el menú "{menu.title}".
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
                     <AlertDialogAction
                       onClick={() => handleDelete(menu.id)}
                       className="bg-destructive hover:bg-destructive/90"
                     >
-                      Delete
+                      Eliminar
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -228,23 +246,21 @@ export default function MenuIndex({ menuItems }: Props) {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <CardTitle className="text-2xl font-bold tracking-tight">
-                  Menu Management
+                  Gestión de menús
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Drag & drop to reorder main menus and submenus
+                  Arrastra y suelta para reordenar los menús principales y submenús
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <Button onClick={handleSave} disabled={isSaving}>
                   <Save className="mr-2 h-4 w-4" />
-                  {isSaving ? 'Saving...' : 'Save Order'}
+                  {isSaving ? 'Guardando...' : 'Guardar orden'}
                 </Button>
-                <Link href="/menus/create">
-                  <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add Menu
-                  </Button>
-                </Link>
+                <Button onClick={openCreateModal}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Añadir menú
+                </Button>
               </div>
             </div>
           </CardHeader>
@@ -255,14 +271,12 @@ export default function MenuIndex({ menuItems }: Props) {
             {menus.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <p className="text-muted-foreground mb-4">
-                  No menus available
+                  No hay menús disponibles
                 </p>
-                <Link href="/menus/create">
-                  <Button>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add First Menu
-                  </Button>
-                </Link>
+                <Button onClick={openCreateModal}>
+                  <Plus className="mr-2 h-4 w-4" />
+                  Añadir primer menú
+                </Button>
               </div>
             ) : (
               <div className="space-y-4">
@@ -285,6 +299,14 @@ export default function MenuIndex({ menuItems }: Props) {
           </CardContent>
         </Card>
       </div>
+
+      <MenuModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        menu={selectedMenu}
+        parentMenus={parentMenus}
+        permissions={permissions}
+      />
     </AppLayout>
   );
 }

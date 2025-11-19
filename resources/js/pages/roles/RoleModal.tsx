@@ -70,11 +70,12 @@ export default function RoleModal({ open, onOpenChange, role, groupedPermissions
 
         const options = {
             onSuccess: () => {
+                toast.success(isEdit ? 'Rol actualizado correctamente.' : 'Rol creado correctamente.');
                 onOpenChange(false);
                 reset();
             },
             onError: () => {
-                toast.error('Error al procesar el rol');
+                toast.error(isEdit ? 'Error al actualizar el rol' : 'Error al crear el rol');
             },
         };
 

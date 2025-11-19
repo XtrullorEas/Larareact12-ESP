@@ -50,7 +50,10 @@ export default function RoleIndex({ roles, groupedPermissions }: Props) {
   const [selectedRole, setSelectedRole] = React.useState<Role | null>(null);
 
   const handleDelete = (id: number) => {
-    destroy(`/roles/${id}`);
+    destroy(`/roles/${id}`, {
+      onSuccess: () => toast.success('Rol eliminado correctamente.'),
+      onError: () => toast.error('Error al eliminar el rol'),
+    });
   };
 
   const openCreateModal = () => {
@@ -127,6 +130,7 @@ export default function RoleIndex({ roles, groupedPermissions }: Props) {
                         <AlertDialogAction
                           onClick={() => handleDelete(role.id)}
                           disabled={processing}
+                          className="bg-destructive hover:bg-destructive/90"
                         >
                           Sí, Eliminar
                         </AlertDialogAction>

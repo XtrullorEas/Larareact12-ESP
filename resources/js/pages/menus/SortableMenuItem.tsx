@@ -14,7 +14,7 @@ export default function SortableMenuItem({ id, title }: Props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    cursor: 'grab', // tambahkan cursor grab
+    cursor: 'grab', // agregar cursor grab
   };
 
   return (
@@ -23,7 +23,7 @@ export default function SortableMenuItem({ id, title }: Props) {
       style={style}
       {...attributes}
       {...listeners}
-      className="flex items-center gap-3 rounded border bg-background px-4 py-2 shadow-sm hover:shadow transition-shadow" // sesuaikan classname
+      className="flex items-center gap-3 rounded border bg-background px-4 py-2 shadow-sm hover:shadow transition-shadow" // ajustar classname
     >
       <GripVertical className="text-muted-foreground size-4" />
       <span className="font-medium text-sm">{title}</span>

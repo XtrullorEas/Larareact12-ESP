@@ -26,6 +26,7 @@ export default function IconPicker({ value, onChange }: IconPickerProps) {
   const customFilter = (input: string, value: string): number => {
     const i = input.toLowerCase();
     const v = value.toLowerCase();
+
     if (v.startsWith(i)) return 2;
     if (v.includes(i)) return 1;
     return 0;
@@ -43,22 +44,22 @@ export default function IconPicker({ value, onChange }: IconPickerProps) {
               value={value}
               onClick={() => setOpen(true)}
               readOnly
-              placeholder="Pilih icon (Lucide)"
+              placeholder="Seleccionar icono (Lucide)"
               className="cursor-pointer"
             />
           </div>
         </PopoverTrigger>
         <PopoverContent className="p-0 w-[300px]">
           <Command filter={customFilter}>
-            <CommandInput placeholder="Cari icon..." />
+            <CommandInput placeholder="Buscar icono..." />
             <CommandList>
-              <CommandEmpty>Icon tidak ditemukan</CommandEmpty>
+              <CommandEmpty>Icono no encontrado</CommandEmpty>
               <CommandGroup>
                 {icons.map(({ name, icon: Icon }) => (
                   <CommandItem
                     key={name}
                     value={name}
-                    onSelect={() => {
+                    onSelect={(val) => {
                       onChange(name);
                       setOpen(false);
                     }}

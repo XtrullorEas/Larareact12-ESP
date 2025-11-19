@@ -64,7 +64,7 @@ class MenuSeeder extends Seeder
         ]);
 
         Menu::create([
-            'title' => 'Gestor de Menú',
+            'title' => 'Gestión de menús',
             'icon' => 'Menu',
             'route' => '/menus',
             'order' => 1,
