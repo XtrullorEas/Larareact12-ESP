@@ -6,7 +6,7 @@ export default function Welcome() {
 
   return (
     <>
-      <Head title="Welcome" />
+      <Head title="Bienvenido" />
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-br from-background to-gray-50 dark:to-gray-900">
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -21,7 +21,7 @@ export default function Welcome() {
               Laravel 12 + React Starter Kit
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Accelerate your development with a production-ready foundation featuring authentication, role management, customizable settings, and a modern UI.
+              Acelera tu desarrollo con una base lista para producción que incluye autenticación, gestión de roles, ajustes personalizables y una interfaz de usuario moderna.
             </p>
           </div>
 
@@ -32,7 +32,7 @@ export default function Welcome() {
                 href="/dashboard"
                 className="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-all transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
               >
-                Go to Dashboard
+                Ir al Dashboard
                 <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
@@ -44,13 +44,13 @@ export default function Welcome() {
                 href="/login"
                 className="px-8 py-3 rounded-lg border border-border bg-white dark:bg-gray-800 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md"
               >
-                Sign In
+                Iniciar sesión
               </Link>
               <Link
                 href="/register"
                 className="px-8 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-all transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
               >
-                Get Started
+                Comenzar
               </Link>
             </div>
           )}
@@ -63,8 +63,8 @@ export default function Welcome() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg mb-2">Secure Authentication</h3>
-              <p className="text-muted-foreground text-sm">Built-in user authentication with email verification and password reset.</p>
+              <h3 className="font-semibold text-lg mb-2">Autenticación Segura</h3>
+              <p className="text-muted-foreground text-sm">Autenticación de usuario integrada con verificación de correo electrónico y restablecimiento de contraseña.</p>
             </div>
             <div className="bg-white dark:bg-gray-800/50 p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
               <div className="text-primary mb-3">
@@ -73,8 +73,8 @@ export default function Welcome() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg mb-2">Role Management</h3>
-              <p className="text-muted-foreground text-sm">Flexible role-based permissions system for controlling access.</p>
+              <h3 className="font-semibold text-lg mb-2">Gestión de Roles</h3>
+              <p className="text-muted-foreground text-sm">Sistema flexible de permisos basado en roles para controlar el acceso.</p>
             </div>
             <div className="bg-white dark:bg-gray-800/50 p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow">
               <div className="text-primary mb-3">
@@ -82,18 +82,18 @@ export default function Welcome() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg mb-2">Modern Dashboard</h3>
-              <p className="text-muted-foreground text-sm">Clean, responsive interface with dark mode support.</p>
+              <h3 className="font-semibold text-lg mb-2">Panel Moderno</h3>
+              <p className="text-muted-foreground text-sm">Interfaz limpia y responsiva con soporte para modo oscuro.</p>
             </div>
           </div>
 
           {/* Footer links */}
           <div className="pt-8 space-y-2 text-sm text-muted-foreground">
             <p>
-              Read the <a href="https://laravel.com/docs" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Laravel documentation</a> or explore <a href="https://laracasts.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Laracasts tutorials</a>.
+              Lee la <a href="https://laravel.com/docs" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">documentación de Laravel</a> o explora los <a href="https://laracasts.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">tutoriales de Laracasts</a>.
             </p>
             <p>
-              Need quick deployment? Try <a href="https://cloud.laravel.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Laravel Cloud</a>.
+              ¿Necesitas un despliegue rápido? Prueba <a href="https://cloud.laravel.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Laravel Cloud</a>.
             </p>
           </div>
         </div>

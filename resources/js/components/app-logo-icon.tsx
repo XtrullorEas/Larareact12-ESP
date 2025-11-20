@@ -23,7 +23,7 @@ export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
     <img
       src={`/storage/${setting.logo}`}
       alt="App Logo"
-      className="h-8 w-8 object-contain"
+      className="h-30 w-auto"
     />
   );
 }
