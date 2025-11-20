@@ -35,16 +35,16 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function BackupIndex({ backups }: Props) {
   const handleBackup = () => {
     router.post('/backup/run', {}, {
-      onSuccess: () => toast.success('Backup created successfully'),
-      onError: () => toast.error('Failed to create backup'),
+      onSuccess: () => toast.success('Backup creado exitosamente'),
+      onError: () => toast.error('Error al crear el backup'),
       preserveScroll: true,
     });
   };
 
   const handleDelete = (filename: string) => {
     router.delete(`/backup/delete/${filename}`, {
-      onSuccess: () => toast.success('Backup deleted successfully'),
-      onError: () => toast.error('Failed to delete backup'),
+      onSuccess: () => toast.success('Backup eliminado exitosamente'),
+      onError: () => toast.error('Error al eliminar el backup'),
       preserveScroll: true,
     });
   };
@@ -57,17 +57,17 @@ export default function BackupIndex({ backups }: Props) {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-bold">Database Backups</CardTitle>
-              <p className="text-muted-foreground text-sm">Manage system backup files</p>
+              <CardTitle className="text-2xl font-bold">Backup de la Base de Datos</CardTitle>
+              <p className="text-muted-foreground text-sm">Gestionar archivos de backup del sistema</p>
             </div>
-            <Button onClick={handleBackup}>Create Backup</Button>
+            <Button onClick={handleBackup}>Crear Backup</Button>
           </CardHeader>
 
           <Separator />
 
           <CardContent className="pt-4 space-y-4">
             {backups.length === 0 ? (
-              <p className="text-muted-foreground text-center">No backups available.</p>
+              <p className="text-muted-foreground text-center">No hay backups disponibles.</p>
             ) : (
               <ul className="space-y-2">
                 {backups.map((backup, index) => (
@@ -88,24 +88,24 @@ export default function BackupIndex({ backups }: Props) {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Button variant="outline" size="sm">Download</Button>
+                        <Button variant="outline" size="sm">Descargar</Button>
                       </a>
 
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="destructive" size="sm">Delete</Button>
+                          <Button variant="destructive" size="sm">Eliminar</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete this backup?</AlertDialogTitle>
+                            <AlertDialogTitle>¿Eliminar este backup?</AlertDialogTitle>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
                             <AlertDialogAction
                               className="bg-destructive hover:bg-destructive/90"
                               onClick={() => handleDelete(backup.name)}
                             >
-                              Delete
+                              Eliminar
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>

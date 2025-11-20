@@ -59,8 +59,8 @@ export default function SettingForm({ setting }: Props) {
   };
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs} title="Application Settings">
-      <Head title="Application Settings" />
+    <AppLayout breadcrumbs={breadcrumbs}>
+      <Head title="Configuración de la Aplicación" />
       <div className="flex-1 p-4 md:p-6">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>

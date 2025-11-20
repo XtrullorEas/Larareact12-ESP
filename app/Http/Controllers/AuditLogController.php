@@ -12,7 +12,7 @@ class AuditLogController extends Controller
     {
         $logs = Activity::with('causer')
             ->orderByDesc('created_at')
-            ->paginate(20);
+            ->paginate(10);
 
         return Inertia::render('auditlogs/Index', [
             'logs' => $logs,

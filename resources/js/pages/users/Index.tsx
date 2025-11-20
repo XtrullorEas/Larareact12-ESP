@@ -69,7 +69,7 @@ export default function UserIndex({ users, roles }: Props) {
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="User Management" />
+      <Head title="Gestión de usuarios" />
       <div className="p-4 md:p-6 space-y-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>

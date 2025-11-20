@@ -26,7 +26,7 @@ interface Props {
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Audit Log',
+    title: 'Registro de Auditoría',
     href: '/audit-logs',
   },
 ];
@@ -34,13 +34,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function AuditLogIndex({ logs }: Props) {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="Audit Log" />
+      <Head title="Registro de Auditoría" />
       <div className="flex-1 p-4 md:p-6">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-2xl font-bold">Audit Log</CardTitle>
+            <CardTitle className="text-2xl font-bold">Registro de Auditoría</CardTitle>
             <p className="text-muted-foreground text-sm">
-              User activity history in the system
+              Historial de actividad de los usuarios en el sistema
             </p>
           </CardHeader>
 
@@ -49,7 +49,7 @@ export default function AuditLogIndex({ logs }: Props) {
           <CardContent className="pt-6 space-y-4">
             {/* List Logs */}
             {logs.data.length === 0 ? (
-              <p className="text-muted-foreground text-center">No activity logs.</p>
+              <p className="text-muted-foreground text-center">No hay registros de actividad.</p>
             ) : (
               logs.data.map((log) => (
                 <div
@@ -60,7 +60,7 @@ export default function AuditLogIndex({ logs }: Props) {
                     {log.description}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {log.causer?.name ?? 'System'} • {new Date(log.created_at).toLocaleString()}
+                    {log.causer?.name ?? 'Sistema'} • {new Date(log.created_at).toLocaleString()}
                     {log.subject_type ? ` • ${log.subject_type.split('\\').pop()}` : ''}
                   </div>
                   {log.properties && Object.keys(log.properties).length > 0 && (

@@ -65,7 +65,7 @@ interface Props {
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'File Management',
+    title: 'Gestión de archivos',
     href: '/files',
   },
 ];
@@ -134,7 +134,7 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
     router.delete(`/media/${deleteFolderId}`, {
       preserveScroll: true,
       onSuccess: () => {
-        toast.success('Folder deleted successfully');
+        toast.success('Carpeta eliminada exitosamente');
         setDeleteFolderId(null);
   
         if (deletingCurrent) {
@@ -143,7 +143,7 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
           router.reload({ only: ['folders'] });
         }
       },
-      onError: () => toast.error('Failed to delete folder'),
+      onError: () => toast.error('Error al eliminar la carpeta'),
     });
   };
 
@@ -162,18 +162,18 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
       forceFormData: true,
       preserveScroll: true,
       onSuccess: () => {
-        toast.success('File uploaded successfully');
+        toast.success('Archivo subido correctamente');
         if (fileInputRef.current) fileInputRef.current.value = '';
         router.reload({ only: ['files'] });
       },
-      onError: () => toast.error('Failed to upload file'),
+      onError: () => toast.error('Error al subir el archivo'),
       onFinish: () => setUploading(false),
     });
   };
 
   const handleCreateFolder = () => {
     if (!newFolderName.trim()) {
-      toast.error('Folder name cannot be empty');
+      toast.error('El nombre de la carpeta no puede estar vacío');
       return;
     }
 
@@ -184,13 +184,13 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
     }, {
       preserveScroll: true,
       onSuccess: () => {
-        toast.success('Folder created successfully');
+        toast.success('Carpeta creada exitosamente');
         setNewFolderName('');
         setIsCreatingFolder(false);
         router.reload({ only: ['folders'] });
       },
       onError: () => {
-        toast.error('Failed to create folder');
+        toast.error('Error al crear la carpeta');
         setIsCreatingFolder(false);
       },
     });      
@@ -229,18 +229,18 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete Folder?</AlertDialogTitle>
+                <AlertDialogTitle>¿Eliminar carpeta?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Folder <strong>{folder.name}</strong> and all its contents will be permanently deleted.
+                  La carpeta <strong>{folder.name}</strong> y todo su contenido serán eliminados permanentemente.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={confirmDeleteFolder}
                   className="bg-red-600 hover:bg-red-700"
                 >
-                  Delete
+                  Eliminar
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -257,12 +257,12 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
-      <Head title="File Manager" />
+      <Head title="Gestión de Archivos" />
       <div className="flex-1 p-4 md:p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar Folder Tree */}
         <div className="md:col-span-1 border rounded-lg p-4 bg-white">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold">Folder Structure</h2>
+            <h2 className="text-sm font-semibold">Estructura de Carpetas</h2>
             <Button 
               variant="outline" 
               size="sm" 
@@ -270,7 +270,7 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
               className="gap-1"
             >
               <FolderPlus className="w-4 h-4" />
-              <span>New Folder</span>
+              <span>Nueva Carpeta</span>
             </Button>
           </div>
           
@@ -280,7 +280,7 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
               onClick={() => router.visit('/files')}
             >
               <FolderRoot className="w-4 h-4 text-blue-500" />
-              <span className="text-sm font-medium">Root Folder</span>
+              <span className="text-sm font-medium">Carpeta Raíz</span>
             </div>
             {renderFolderTree(buildFolderTree(folders ?? []))}
           </div>
@@ -291,11 +291,11 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-semibold">
-                {currentFolder ? currentFolder.name : 'Root Folder'}
+                {currentFolder ? currentFolder.name : 'Carpeta Raíz'}
               </h2>
               {currentFolder && (
                 <span className="text-sm text-gray-500">
-                  ({files.length} {files.length === 1 ? 'item' : 'items'})
+                  ({files.length} {files.length === 1 ? 'elemento' : 'elementos'})
                 </span>
               )}
             </div>
@@ -314,7 +314,7 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
                 className="gap-2"
               >
                 <UploadCloud className="w-4 h-4" />
-                {uploading ? 'Uploading...' : 'Upload'}
+                {uploading ? 'Subiendo...' : 'Subir'}
               </Button>
             </div>
           </div>
@@ -324,14 +324,14 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
           {files.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-64 text-gray-500">
               <Folder className="w-12 h-12 mb-2" />
-              <p>No files in this folder</p>
+              <p>No hay archivos en esta carpeta</p>
               <Button 
                 variant="ghost" 
                 size="sm" 
                 className="mt-2"
                 onClick={() => fileInputRef.current?.click()}
               >
-                Upload the first file
+                Subir el primer archivo
               </Button>
             </div>
           ) : (
@@ -371,13 +371,13 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete File?</AlertDialogTitle>
+                            <AlertDialogTitle>¿Eliminar archivo?</AlertDialogTitle>
                             <AlertDialogDescription>
-                              File <strong>{file.name}</strong> will be permanently deleted.
+                              El archivo <strong>{file.name}</strong> será eliminado permanentemente.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
                             <AlertDialogAction
                               onClick={() => router.delete(`/files/${file.id}`, {
                                 preserveScroll: true,
@@ -388,7 +388,7 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
                               })}
                               className="bg-red-600 hover:bg-red-700"
                             >
-                              Delete
+                              Eliminar
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -406,21 +406,21 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
       <Dialog open={isCreatingFolder} onOpenChange={setIsCreatingFolder}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create New Folder</DialogTitle>
+            <DialogTitle>Crear Nueva Carpeta</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <Input
-              placeholder="Folder name"
+              placeholder="Nombre de la carpeta"
               value={newFolderName}
               onChange={(e) => setNewFolderName(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleCreateFolder()}
             />
             <div className="flex justify-end gap-2">
               <Button variant="outline" onClick={() => setIsCreatingFolder(false)}>
-                Cancel
+                Cancelar
               </Button>
               <Button onClick={handleCreateFolder} disabled={!newFolderName.trim()}>
-                Create
+                Crear
               </Button>
             </div>
           </div>
@@ -455,13 +455,13 @@ export default function FileManager({ folders, currentFolderId, currentFolder, f
                 ) : (
                   <div className="flex flex-col items-center justify-center h-64 text-gray-500">
                     <File className="w-12 h-12 mb-2" />
-                    <p>Preview not available</p>
+                    <p>Vista previa no disponible</p>
                     <a 
                       href={previewFile.url} 
                       download={previewFile.name}
                       className="mt-2 text-blue-500 hover:underline"
                     >
-                      Download file
+                      Descargar archivo
                     </a>
                   </div>
                 )}

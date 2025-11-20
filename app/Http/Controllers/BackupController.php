@@ -12,6 +12,11 @@ class BackupController extends Controller
 
     public function index()
     {
+        // Bloquear windows
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            abort(403, 'La funcionalidad de backup no está disponible en Windows.');
+        }
+
         $realPath = storage_path('app/' . $this->backupPath);
 
         $files = File::exists($realPath) ? File::files($realPath) : [];
@@ -35,7 +40,7 @@ class BackupController extends Controller
     public function run()
     {
         Artisan::call('backup:run --only-db');
-        return redirect()->back()->with('success', 'Backup berhasil dibuat.');
+        return redirect()->back()->with('success', 'Backup de base de datos creado exitosamente.');
     }
 
     public function download($file)
@@ -43,7 +48,7 @@ class BackupController extends Controller
         $path = storage_path('app/' . $this->backupPath . '/' . $file);
 
         if (!file_exists($path)) {
-            abort(404, 'File tidak ditemukan.');
+            abort(404, 'Archivo no encontrado.');
         }
 
         return response()->download($path);
@@ -54,11 +59,11 @@ class BackupController extends Controller
         $path = storage_path('app/' . $this->backupPath . '/' . $file);
 
         if (!file_exists($path)) {
-            return redirect()->back()->with('error', 'File tidak ditemukan.');
+            return redirect()->back()->with('error', 'Archivo no encontrado.');
         }
 
         unlink($path);
 
-        return redirect()->back()->with('success', 'Backup berhasil dihapus.');
+        return redirect()->back();
     }
 }
