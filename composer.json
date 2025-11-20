@@ -1,8 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "yogijowo/laravel12-react-starterkit",
+    "name": "xtrulloreas/larareact12-esp",
     "type": "project",
-    "description": "Starter Kit Laravel 12 + React + Inertia + Tailwind + ShadCN UI + Spatie Permission",
+    "description": "Kit de Inicio con Laravel 12 + React + Inertia + Tailwind + ShadCN UI + Spatie Permission",
     "keywords": [
         "laravel",
         "framework",
